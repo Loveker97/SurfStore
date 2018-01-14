@@ -51,7 +51,7 @@ service MetadataStore {
     rpc IsLeader (Empty) returns (SimpleAnswer) {}
 
     // "Crash" the MetadataStore server.
-    // Until Restore() is called, the server should reply to all RPCs
+    // Until Restore() is called, a crashed replica should only respond to three RPCs: // Restore(), ReadFile(), and isCrashed()
     // with an error (except Restore) and not send any RPCs to other servers.
     rpc Crash(Empty) returns (Empty) {}
 
@@ -65,6 +65,13 @@ service MetadataStore {
 
     // YOU CAN INSERT ADDITIONAL RPC CALLS HERE TO IMPLEMENT PART 2
     // OF THE PROJECT, BUT PLEASE DON'T MODIFY THE ABOVE CALLS/ARGUMENTS
+    rpc Update(Logs) returns (SimpleAnswer) {}
+
+    // The first phase of twp phase commit
+    rpc Vote(Empty) returns (SimpleAnswer) {}
+
+    // The second phase of twp phase commit
+    rpc Commit(Log) returns (Empty) {}
 }
 
 service BlockStore {
@@ -93,6 +100,17 @@ service BlockStore {
 // but do not change the provided fields or their names.  You can also add additional
 // message definitions as you'd like.
 message Empty { }
+
+message Logs {
+    repeated Log allLogs = 1;
+}
+
+message Log {
+    string cmd = 1;
+    string filename = 2;
+    int32 version = 3;
+    repeated string blocklist = 4;
+}
 
 message FileInfo {
     string filename = 1;
