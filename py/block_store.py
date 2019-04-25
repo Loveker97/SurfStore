@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 ##############################################################################
-# Project 2 - SurfStore
-# Peter Panourgias
-# Feng Jiang
+
+
+# Hang Zhang
 # block_store.py
 ##############################################################################
 import argparse
