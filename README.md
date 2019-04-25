@@ -27,4 +27,4 @@ $ client.py [-h] config_file
 
 ## Authors
 
-Feng Jiang, Peter T Panourgias
+Hang Zhang
